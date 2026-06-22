@@ -59,6 +59,7 @@ nav.scrolled { box-shadow: 0 4px 40px rgba(0,0,0,0.06); }
 .nav-logo-mark {
   width: 38px; height: 38px; background: var(--black); border-radius: 50%;
   display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  will-change: transform;
 }
 .nav-brand {
   font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 18px;
@@ -1476,11 +1477,15 @@ footer { background: #0D0D0D; padding: 80px 0 36px; }
      JAVASCRIPT
 ============================================================ -->
 <script>
-  // Scroll-based nav shadow
+  // Scroll-based nav shadow + logo spin
   const nav = document.getElementById('main-nav');
+  const logoMark = document.querySelector('.nav-logo-mark');
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 40);
-  });
+    // Spin the logo mark based on scroll position (1 full rotation per 600px scrolled)
+    const deg = window.scrollY / 600 * 360;
+    logoMark.style.transform = `rotate(${deg}deg)`;
+  }, { passive: true });
 
   // Reveal on scroll
   const revealEls = document.querySelectorAll('.reveal');
